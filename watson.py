@@ -5,10 +5,11 @@ import json
 import twitter
 from watson_developer_cloud import PersonalityInsightsV2 as PersonalityInsights
 def analyze(handle):
-  twitter_consumer_key = 'rkOp3DR4oEqZrC6jBxGSf1xRT'
-  twitter_consumer_secret = 'OjejZKAOCUGcw1P4NTdfiYQipc1sgHbK3ksIZWPQYhg3rnRc6k'
-  twitter_access_token = '3269047550-FaD4q6ZAQxo66vslr33qtB7oZZmD4GNu6CIjqfX'
-  twitter_access_secret = 'k1Vz5UJ4j4PW2UIXE3vLGD58zAlwVXFKpduDek0Iq34HS'
+  #Enter twitter APP data 
+  twitter_consumer_key = ''      
+  twitter_consumer_secret = ''
+  twitter_access_token = ''
+  twitter_access_secret = ''
   twitter_api = twitter.Api(consumer_key=twitter_consumer_key, consumer_secret=twitter_consumer_secret,     access_token_key=twitter_access_token, access_token_secret=twitter_access_secret)
 
   statuses =twitter_api.GetUserTimeline(screen_name=handle, count=200, include_rts=False)
@@ -16,12 +17,12 @@ def analyze(handle):
   for status in statuses:
     if (status.lang=='en'):
       text+=status.text.encode('utf-8')
-  pi_username='f3957793-ea03-47bd-8397-46674e0a6631'
-  pi_password='Xk7XjemVN7xl'
+  pi_username=''         #Enter Personality insights username and password after logging onto IBM website
+  pi_password=''
   personality_insights = PersonalityInsights(username=pi_username, password=pi_password)
   pi_result=personality_insights.profile(text)
   return pi_result
-def flatten(orig):
+def flatten(orig):              # TO deal with JSON data
     data = {}
     for c in orig['tree']['children']:
         if 'children' in c:
@@ -43,8 +44,8 @@ def compare(dict1, dict2):
         if dict1[keys] != dict2[keys]:
                 compared_data[keys]=abs(dict1[keys] - dict2[keys])
     return compared_data
-user_handle="@OfficialBleh"
-celebrity_handle="@olofmCS"
+user_handle=""          #Enter two twitter handles that you want to compare
+celebrity_handle=""
 user_result = analyze(user_handle)
 celebrity_result = analyze(celebrity_handle)
 user = flatten(user_result)
